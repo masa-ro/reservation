@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :edit, :update, :destroy]
+  before_action :check_login
 
   # GET /rooms
   # GET /rooms.json
@@ -30,6 +31,8 @@ class RoomsController < ApplicationController
       if @room.save
         format.html { redirect_to @room, notice: 'Room was successfully created.' }
         format.json { render :show, status: :created, location: @room }
+        # session[:room] = @room.name
+        session[:room] = params["room[name]"]
       else
         format.html { render :new }
         format.json { render json: @room.errors, status: :unprocessable_entity }
@@ -61,6 +64,11 @@ class RoomsController < ApplicationController
     end
   end
 
+  # def logout
+  #   session[:user] = nil
+  #   redirect_to '/login.html'
+  # end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_room
@@ -71,4 +79,21 @@ class RoomsController < ApplicationController
     def room_params
       params.require(:room).permit(:name, :place, :number)
     end
+
+    def check_login
+      @user = session[:user]
+      unless @user
+        redirect_to '/login.html'
+      end
+    end
+
+    # def check_login
+    #   @user = session[:user]
+    #   if @user
+
+    #   else
+    #     redirect_to '/login.html'
+    #   end
+    # end
+
 end

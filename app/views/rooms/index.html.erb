@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Rooms</h1>
-<a href="top/index">トップページへ</a>
-
+<a href="top/index">トップページへ</a><br>
+<%= "最近登録の部屋。#{session[:room]}です。" if session[:room] %>
 <table>
   <thead>
     <tr>
@@ -30,3 +30,12 @@
 <br>
 
 <%= link_to 'New Room', new_room_path %>
+<br>
+
+<!--
+<form action="login/logout" method="GET">
+  <input type="submit" value="ログアウト">
+</form>
+-->
+
+<a href="login/logout">ログアウト</a>
